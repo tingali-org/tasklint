@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
-using System;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace TaskLint.Api
@@ -48,21 +47,20 @@ namespace TaskLint.Api
                     });
             });
 
-            //services.AddApplication();
+            services.AddApplication();
 
-            //services.AddInfrastructure(Configuration);
+            services.AddInfrastructure(Configuration);
 
-            //services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-            //services.AddHttpContextAccessor();
+            services.AddHttpContextAccessor();
 
-            //services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddHealthChecks();
-            //services.AddHealthChecks()
-            //        .AddDbContextCheck<ApplicationDbContext>();
+            services.AddHealthChecks()
+                    .AddDbContextCheck<ApplicationDbContext>();
 
             services.AddControllers(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
@@ -124,7 +122,7 @@ namespace TaskLint.Api
 
             app.UseAuthentication();
 
-            //app.UseIdentityServer();
+            app.UseIdentityServer();
 
             app.UseAuthorization();
 

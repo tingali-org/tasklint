@@ -18,6 +18,10 @@ using static TaskLint.Domain.Common.DomainEvent;
 
 namespace TaskLint.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The Application DB Context
+    /// To add a migration, run in terminal from solution root: `dotnet ef migrations add MIGRATION_NAME --project src\TaskLint.Infrastructure --startup-project src\TaskLint.Api --output-dir Persistence\Migrations`
+    /// </summary>
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
@@ -40,9 +44,9 @@ namespace TaskLint.Infrastructure.Persistence
             _dateTime = dateTime ?? throw new System.ArgumentNullException(nameof(dateTime));
         }
 
-        public DbSet<NoteItem> NoteItems { get; set; }
+        public DbSet<TaskItem> TaskItems { get; set; }
 
-        public DbSet<NoteList> NoteLists { get; set; }
+        public DbSet<TaskList> TaskLists { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

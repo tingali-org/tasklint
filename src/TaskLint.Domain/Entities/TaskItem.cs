@@ -8,11 +8,11 @@ using static TaskLint.Domain.Common.DomainEvent;
 
 namespace TaskLint.Domain.Entities
 {
-    public class NoteItem : AuditableEntity, IHasDomainEvent
+    public class TaskItem : AuditableEntity, IHasDomainEvent
     {
         public int Id { get; set; }
 
-        public NoteList List { get; set; }
+        public TaskList List { get; set; }
 
         public int ListId { get; set; }
 

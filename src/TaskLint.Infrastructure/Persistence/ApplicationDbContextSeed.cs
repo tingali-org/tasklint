@@ -32,20 +32,20 @@ namespace TaskLint.Infrastructure.Persistence
         public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
             // Seed, if necessary
-            if (!context.NoteLists.Any())
+            if (!context.TaskLists.Any())
             {
-                context.NoteLists.Add(new NoteList {
-                    Title = "Note List 1",
+                context.TaskLists.Add(new TaskList {
+                    Title = "Task List 1",
                     Items =
                     {
-                        new NoteItem { Title = "Note 1", BackgroundColor = BackgroundColor.Blue },
-                        new NoteItem { Title = "Note 2", BackgroundColor = BackgroundColor.None, Done = true },
-                        new NoteItem { Title = "Note 3", BackgroundColor = BackgroundColor.Pink, Done = true },
-                        new NoteItem { Title = "Note 4", BackgroundColor = BackgroundColor.Red },
-                        new NoteItem { Title = "Note 5", BackgroundColor = BackgroundColor.Blue },
-                        new NoteItem { Title = "Note 6", BackgroundColor = BackgroundColor.Yellow },
-                        new NoteItem { Title = "Note 7", BackgroundColor = BackgroundColor.Blue, Done = true },
-                        new NoteItem { Title = "Note 8", BackgroundColor = BackgroundColor.Green }
+                        new TaskItem { Title = "Task 1", BackgroundColor = BackgroundColor.Blue },
+                        new TaskItem { Title = "Task 2", BackgroundColor = BackgroundColor.None, Done = true },
+                        new TaskItem { Title = "Task 3", BackgroundColor = BackgroundColor.Pink, Done = true },
+                        new TaskItem { Title = "Task 4", BackgroundColor = BackgroundColor.Red },
+                        new TaskItem { Title = "Task 5", BackgroundColor = BackgroundColor.Blue },
+                        new TaskItem { Title = "Task 6", BackgroundColor = BackgroundColor.Yellow },
+                        new TaskItem { Title = "Task 7", BackgroundColor = BackgroundColor.Blue, Done = true },
+                        new TaskItem { Title = "Task 8", BackgroundColor = BackgroundColor.Green }
                     }
                 });
 

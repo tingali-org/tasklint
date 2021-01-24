@@ -5,9 +5,9 @@ using TaskLint.Domain.Entities;
 
 namespace TaskLint.Infrastructure.Persistence.Configurations
 {
-    public class NoteItemConfiguration : IEntityTypeConfiguration<NoteItem>
+    public class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
     {
-        public void Configure(EntityTypeBuilder<NoteItem> builder)
+        public void Configure(EntityTypeBuilder<TaskItem> builder)
         {
             builder.Ignore(e => e.DomainEvents);
 

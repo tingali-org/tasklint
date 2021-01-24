@@ -9,9 +9,9 @@ namespace TaskLint.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<NoteList> NoteLists { get; set; }
+        DbSet<TaskList> TaskLists { get; set; }
 
-        DbSet<NoteItem> NoteItems { get; set; }
+        DbSet<TaskItem> TaskItems { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

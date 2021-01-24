@@ -19,34 +19,34 @@ namespace TaskLint.Api
         {
             var host = CreateHostBuilder(args).Build();
 
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
-            //    try
-            //    {
-            //        var context = services.GetRequiredService<ApplicationDbContext>();
+                try
+                {
+                    var context = services.GetRequiredService<ApplicationDbContext>();
 
-            //        if (context.Database.IsSqlServer())
-            //        {
-            //            context.Database.Migrate();
-            //        }
+                    if (context.Database.IsSqlServer())
+                    {
+                        context.Database.Migrate();
+                    }
 
-            //        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-            //        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-            //        await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
-            //        await ApplicationDbContextSeed.SeedSampleDataAsync(context);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            //        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
 
-            //        throw;
-            //    }
-            //}
+                    throw;
+                }
+            }
 
             await host.RunAsync();
         }

@@ -5,11 +5,11 @@ namespace TaskLint.Domain.Events
 {
     public class NoteItemCompletedEvent : DomainEvent
     {
-        public NoteItemCompletedEvent(NoteItem item)
+        public NoteItemCompletedEvent(TaskItem item)
         {
             Item = item;
         }
 
-        public NoteItem Item { get; }
+        public TaskItem Item { get; }
     }
 }

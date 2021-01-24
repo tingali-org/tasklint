@@ -5,9 +5,9 @@ using TaskLint.Domain.Entities;
 
 namespace TaskLint.Infrastructure.Persistence.Configurations
 {
-    public class NoteListConfiguration : IEntityTypeConfiguration<NoteList>
+    public class TaskListConfiguration : IEntityTypeConfiguration<TaskList>
     {
-        public void Configure(EntityTypeBuilder<NoteList> builder)
+        public void Configure(EntityTypeBuilder<TaskList> builder)
         {
             builder.Property(t => t.Title)
                 .HasMaxLength(200)
