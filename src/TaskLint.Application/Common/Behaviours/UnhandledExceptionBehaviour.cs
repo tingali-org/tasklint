@@ -10,7 +10,7 @@ namespace TaskLint.Application.Common.Behaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        private const string ErrorMessage = "Template Request: Unhandled Exception for Request {Name} {@Request}";
+        private const string ErrorMessage = "TaskLint Request: Unhandled Exception for Request {Name} {@Request}";
         private readonly ILogger<TRequest> _logger;
 
         public UnhandledExceptionBehaviour(ILogger<TRequest> logger)

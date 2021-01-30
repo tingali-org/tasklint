@@ -17,7 +17,7 @@
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			}
 		},
-		"Template.Api": {
+		"TaskLint.Api": {
 			"commandName": "Project",
 			"launchBrowser": true,
 			"launchUrl": "swagger",

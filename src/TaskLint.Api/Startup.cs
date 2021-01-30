@@ -4,10 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using TaskLint.Application;
-using TaskLint.Application.Common.Interfaces;
 using TaskLint.Infrastructure;
 using TaskLint.Infrastructure.Persistence;
-using TaskLint.Api.Services;
 using NSwag;
 using TaskLint.Api.Filters;
 using FluentValidation.AspNetCore;
@@ -33,6 +31,10 @@ namespace TaskLint.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+
+            services.AddInfrastructure(Configuration);
+
             services.Configure<ApiBehaviorOptions>(c =>
             {
                 c.SuppressModelStateInvalidFilter = true;
@@ -47,13 +49,7 @@ namespace TaskLint.Api
                     });
             });
 
-            services.AddApplication();
-
-            services.AddInfrastructure(Configuration);
-
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
 
@@ -76,7 +72,7 @@ namespace TaskLint.Api
 
             services.AddOpenApiDocument(configure =>
             {
-                configure.Title = "Template.Api";
+                configure.Title = "TaskLint.Api";
                 configure.Version = "v1";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme {
                     Type = OpenApiSecuritySchemeType.ApiKey,
@@ -100,7 +96,7 @@ namespace TaskLint.Api
 
                 app.UseSwaggerUi3(settings =>
                 {
-                    settings.DocumentTitle = "Template.Api v1";
+                    settings.DocumentTitle = "TaskLint.Api v1";
                 });
 
                 app.UseDeveloperExceptionPage();
@@ -109,22 +105,17 @@ namespace TaskLint.Api
 
                 app.UseCors(this.AllowedOriginsCorsPolicy);
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
 
-            app.UseExceptionHandler("/Error");
-
-            app.UseHsts();
-
             app.UseRouting();
-
-            app.UseAuthentication();
-
-            app.UseIdentityServer();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

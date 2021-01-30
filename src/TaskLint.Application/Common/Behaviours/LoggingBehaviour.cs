@@ -6,39 +6,26 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using TaskLint.Application.Common.Interfaces;
-
 namespace TaskLint.Application.Common.Behaviours
 {
     public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     {
-        private const string InformationMessage = "Template Request: {Name} {@UserId} {@UserName} {@Request}";
+        private const string InformationMessage = "TaskLint Request: {Name} {@Request}";
         private readonly ILogger _logger;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IIdentityService _identityService;
 
         public LoggingBehaviour(
-            ILogger<TRequest> logger,
-            ICurrentUserService currentUserService,
-            IIdentityService identityService)
+            ILogger<TRequest> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task Process(TRequest request, CancellationToken cancellationToken)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _currentUserService.UserId ?? String.Empty;
-            string userName = String.Empty;
 
-            if (!String.IsNullOrWhiteSpace(userId))
-            {
-                userName = await _identityService.GetUserNameAsync(userId);
-            }
-
-            _logger.LogInformation(InformationMessage, requestName, userId, userName, request);
+            _logger.LogInformation(InformationMessage, requestName, request);
         }
     }
 }

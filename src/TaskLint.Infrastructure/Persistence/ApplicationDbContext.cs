@@ -1,8 +1,5 @@
-﻿using IdentityServer4.EntityFramework.Options;
-
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 using System.Linq;
 using System.Reflection;
@@ -12,7 +9,6 @@ using System.Threading.Tasks;
 using TaskLint.Application.Common.Interfaces;
 using TaskLint.Domain.Common;
 using TaskLint.Domain.Entities;
-using TaskLint.Infrastructure.Identity;
 
 using static TaskLint.Domain.Common.DomainEvent;
 
@@ -22,24 +18,18 @@ namespace TaskLint.Infrastructure.Persistence
     /// The Application DB Context
     /// To add a migration, run in terminal from solution root: `dotnet ef migrations add MIGRATION_NAME --project src\TaskLint.Infrastructure --startup-project src\TaskLint.Api --output-dir Persistence\Migrations`
     /// </summary>
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private readonly IDomainEventService _domainEventService;
 
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions,
-            ICurrentUserService currentUserService,
             IDomainEventService domainEventService,
-            IDateTime dateTime) : base(options, operationalStoreOptions)
+            IDateTime dateTime) : base(options)
         {
             if (options is null)
                 throw new System.ArgumentNullException(nameof(options));
-            if (operationalStoreOptions is null)
-                throw new System.ArgumentNullException(nameof(operationalStoreOptions));
-            _currentUserService = currentUserService ?? throw new System.ArgumentNullException(nameof(currentUserService));
             _domainEventService = domainEventService ?? throw new System.ArgumentNullException(nameof(domainEventService));
             _dateTime = dateTime ?? throw new System.ArgumentNullException(nameof(dateTime));
         }
@@ -55,12 +45,10 @@ namespace TaskLint.Infrastructure.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
                         entry.Entity.Created = _dateTime.Now;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
                         entry.Entity.LastModified = _dateTime.Now;
                         break;
                 }

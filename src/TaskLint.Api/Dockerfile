@@ -10,16 +10,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Template.Api/Template.Api.csproj", "Template.Api/"]
-RUN dotnet restore "Template.Api/Template.Api.csproj"
+COPY ["TaskLint.Api/TaskLint.Api.csproj", "TaskLint.Api/"]
+RUN dotnet restore "TaskLint.Api/TaskLint.Api.csproj"
 COPY . .
-WORKDIR "/src/Template.Api"
-RUN dotnet build "Template.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/TaskLint.Api"
+RUN dotnet build "TaskLint.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Template.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "TaskLint.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Template.Api.dll"]
+ENTRYPOINT ["dotnet", "TaskLint.Api.dll"]
